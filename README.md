@@ -1,1 +1,1 @@
-# natural-cubic-spline
+# natural cubic spline
