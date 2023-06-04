@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/susankianim/natural-cubic-spline#readme",
   "dependencies": {
-    "matrix-js": "^1.6.1"
+    "matrix-js": "^1.6.1",
+    "polynomial": "^1.4.5"
   }
 }
