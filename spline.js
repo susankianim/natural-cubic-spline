@@ -17,12 +17,14 @@ function f(x) {
     }
     // else return eval(rule);
     else {
-        if (x == 1) return -1
-        else {return x**2}
+        if (x == 0) return 1
+        if (x == 1) return 4
+        if (x == 2) return 0
+        if (x == 3) return -2
     }
 }
 
-let x_ = [-1, 0, 1, 2];
+let x_ = [0, 1, 2, 3];
 let values = x_.map(x => f(x))
 
 let n = x_.length - 1;
@@ -42,25 +44,18 @@ if (is_natural) {
     A.map((row, i) => A[i] = row.slice(1, -1))
 }
 
-let b = x_.slice(1, -1).map((num, i) => 6 * f([x_[i], num, x_[i + 2]]))
+let b = x_.slice(1, -1).map((num, i) => 6 * f([x_[i], num, x_[i + 2]]));
 
 
 let m = [0].concat(...solve(A, b)).concat([0]);
 
-
-
-// let A1 = [[1, 1, -3 , 1], [-5, 3, -4, 1], [1, 0, 2, -1], [1,  2, 0, 0]]
-// let b1 = [2*17, 0, 1*17, 12*17]
-// // console.log(new Polynomial("+1").pow(3).toString());
-
-// let A2 = [ [ 25, 2, 75, 0 ], [ 0, 5, 2, 5 ] ]
-// let b2 = [2*17, 0]
-
-// // console.log(A);
-// // console.log(b);
-// // console.log(A1);
-// // console.log(b1);
-// console.log(solve(A1, b1));
-// console.log(solve(A2, b2));
-
-
+let spline = []
+for (let i = 0; i < n; i++) {
+    let q = values[i] - h[i + 1] * m[i] / 6;
+    let p = f([x_[i], x_[i + 1]]) + h[i + 1] * (m[i] - m[i + 1]) / 6;
+    let polynomial_rule = new Polynomial(`x-${x_[i]}`).pow(3).mul(m[i + 1] / (6 * h[i + 1]))
+        .add(new Polynomial(`${x_[i + 1]}-x`).pow(3).mul(m[i] / (6 * h[i + 1])))
+        .add(new Polynomial(`x-${x_[i]}`).mul(p)).add(q);
+    spline[i] = polynomial_rule.toString();
+}
+console.log(spline);
