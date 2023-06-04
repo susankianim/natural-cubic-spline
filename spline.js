@@ -4,26 +4,27 @@ import Polynomial from "polynomial"
 function solve(A, b) {
     A = matrix(A);
     b = matrix(matrix(b).map(x => [x]));
-    let A_inv = matrix(A.inv())
+    let A_inv = matrix(A.inv());
     return A_inv.prod(b)
 }
 
-function rule(x) {return x**2}
+let rule = "x**2";
 
 function f(x) {
     if (x.length > 1) {
-        return (f(x.slice(1)) - f(x.slice(0, -1)))/(x[x.length - 1] - x[0])
+        return (f(x.slice(1)) - f(x.slice(0, -1)))/(x[x.length - 1] - x[0]);
     }
-    else return rule(x)
+    else return eval(rule);
 }
 
-let nodes = [1, 2, 5, 8, 9]
-let n = nodes.length
-let h = nodes.slice(1).map((num, i) => num - nodes[i]);
-h.unshift(NaN)
+let known = [1, 2, 5, 8, 9];
+let values = known.map(x => f(x))
+
+let n = known.length;
+let h = known.slice(1).map((num, i) => num - known[i]);
+h.unshift(NaN);
 let mu = h.slice(1).map((num, i) => h[i] / (num + h[i]));
 let lambda = mu.map(x => 1 - x);
-
 
 
 
