@@ -22,13 +22,7 @@ class Issue {
         if (x.length > 1) {
             return (this.f(x.slice(1)) - this.f(x.slice(0, -1))) / (x[x.length - 1] - x[0]);
         }
-        // else return eval(rule);
-        else {
-            if (x == -1) return 1
-            if (x == 0) return 0
-            if (x == 1) return -1
-            if (x == 2) return 4
-        }
+        else return eval(this.rule);
     }
 
     make_matrix_A() {
@@ -72,7 +66,6 @@ class Issue {
                 .add(new Polynomial("x").sub(this.x_[i]).mul(p)).add(q);
             spline[i] = rule_i.toString();
         }
-        // return spline
         let splineArr = Array.from(Array(this.n), () => new Array(2).fill(0))
         this.x_.slice(1).map((node, i) => {
             splineArr[i][0] = [this.x_[i], node]
