@@ -1,18 +1,22 @@
+<!DOCTYPE html>
 <html>
 
 <head>
-    <title>Exercise 1 Set A
-    </title>
+    <meta charset="UTF-8">
+    <title>Spline</title>
 </head>
 
 <body>
-    <!-- <center> -->
-    <div class="center" style="position: relative;">
-        x<sup><small>3</small></sup>+x<sup><small>2</small></sup>+-1.8x&emsp;&emsp;-1 ≤ x ≤ 0
-        <br>x<sup><small>3</small></sup>+x<sup><small>2</small></sup>+-1.8x&emsp;&emsp;0 ≤ x ≤ 1
-        <br>x<sup><small>3</small></sup>+x<sup><small>2</small></sup>+-12.6x++3.5999999999999996&emsp;&emsp;1 ≤ x ≤ 2
+    <div id="spline-container">
+        <!-- The converted spline will be inserted here -->
     </div>
-    <!-- </center> -->
+
+    <script src="app.js"></script>
+    <script>
+        const splineContainer = document.getElementById('spline-container');
+        splineContainer.textContent = convertSplineToHTML(my_spline);
+
+    </script>
 </body>
 
 </html>
