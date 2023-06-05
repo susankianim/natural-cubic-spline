@@ -8,19 +8,19 @@ function solve(A, b) {
     return A_inv.prod(b);
 }
 
-class Issue{
+class Issue {
     constructor(rule, x_, is_natural = true) {
         this.is_natural = is_natural
         this.rule = rule;
         this.x_ = x_;
-        this.n =  x_.length - 1;
+        this.n = x_.length - 1;
         this.h = x_.slice(1).map((num, i) => num - x_[i]);
         this.h.unshift(NaN);
     }
 
     f(x) {
         if (x.length > 1) {
-            return (this.f(x.slice(1)) - this.f(x.slice(0, -1)))/(x[x.length - 1] - x[0]);
+            return (this.f(x.slice(1)) - this.f(x.slice(0, -1))) / (x[x.length - 1] - x[0]);
         }
         // else return eval(rule);
         else {
@@ -34,14 +34,14 @@ class Issue{
     make_matrix_A() {
         let mu = this.h.slice(1).map((num, i) => this.h[i] / (num + this.h[i]));
         let lambda = mu.map(x => 1 - x);
-        
+
         let A = Array.from(Array(this.n - 1), () => new Array(this.n + 1).fill(0))
         for (let i = 1; i < this.n; i++) {
             A[i - 1][i - 1] = mu[i]
             A[i - 1][i] = 2
             A[i - 1][i + 1] = lambda[i]
         }
-        
+
         if (this.is_natural) {
             A.map((row, i) => A[i] = row.slice(1, -1))
         }
@@ -73,14 +73,13 @@ class Issue{
             spline[i] = rule_i.toString();
         }
         // return spline
-        let obj = {}
-        this.x_.slice(1).forEach((node, i) => obj[[this.x_[i], node]] = spline[i])
-        return obj
+        let splineArr = Array.from(Array(this.n), () => new Array(2).fill(0))
+        this.x_.slice(1).map((node, i) => {
+            splineArr[i][0] = [this.x_[i], node]
+            splineArr[i][1] = spline[i]
+        })
+        return splineArr;
     }
 }
 
-
-
-
-let my_issue = new Issue("x + 1", [-1, 0, 1, 2])
-console.log(my_issue.make_spline());
+export { Issue }
