@@ -71,7 +71,7 @@ class Issue {
             let rule_i = new Polynomial("x").sub(this.x_[i]).pow(3).mul(m[i + 1] / (6 * this.h[i + 1]))
                 .add(new Polynomial(`${this.x_[i + 1]}-x`).pow(3).mul(m[i] / (6 * this.h[i + 1])))
                 .add(new Polynomial("x").sub(this.x_[i]).mul(p)).add(q);
-            spline[i] = rule_i.toString();
+            spline[i] = rule_i.toString().replace(/\d+\.\d+/g, match => parseFloat(match).toFixed(2));
         }
         let splineArr = Array.from(Array(this.n), () => new Array(2).fill(0))
         this.x_.slice(1).map((node, i) => {
@@ -89,4 +89,4 @@ let x = [-1, 0, 1, 2]
 // console.log((myIssue.make_matrix_A()));
 // console.log((myIssue.make_matrix_b()));
 // console.log((myIssue.make_matrix_m()));
-// console.log((myIssue.make_spline()));
+console.log((myIssue.make_spline()));
