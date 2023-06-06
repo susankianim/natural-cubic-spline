@@ -502,18 +502,18 @@
       }
       if (a === b)
         return 0;
-      let x2 = a.length;
+      let x = a.length;
       let y = b.length;
-      for (let i = 0, len = Math.min(x2, y); i < len; ++i) {
+      for (let i = 0, len = Math.min(x, y); i < len; ++i) {
         if (a[i] !== b[i]) {
-          x2 = a[i];
+          x = a[i];
           y = b[i];
           break;
         }
       }
-      if (x2 < y)
+      if (x < y)
         return -1;
-      if (y < x2)
+      if (y < x)
         return 1;
       return 0;
     };
@@ -765,21 +765,21 @@
       thisEnd >>>= 0;
       if (this === target)
         return 0;
-      let x2 = thisEnd - thisStart;
+      let x = thisEnd - thisStart;
       let y = end - start;
-      const len = Math.min(x2, y);
+      const len = Math.min(x, y);
       const thisCopy = this.slice(thisStart, thisEnd);
       const targetCopy = target.slice(start, end);
       for (let i = 0; i < len; ++i) {
         if (thisCopy[i] !== targetCopy[i]) {
-          x2 = thisCopy[i];
+          x = thisCopy[i];
           y = targetCopy[i];
           break;
         }
       }
-      if (x2 < y)
+      if (x < y)
         return -1;
-      if (y < x2)
+      if (y < x)
         return 1;
       return 0;
     };
@@ -2476,7 +2476,7 @@
         }
         var parse = function(p1, p2) {
           var n = 0, d = 1, s = 1;
-          var v = 0, w = 0, x2 = 0, y = 1, z = 1;
+          var v = 0, w = 0, x = 0, y = 1, z = 1;
           var A = 0, B = 1;
           var C = 1, D = 1;
           var N = 1e7;
@@ -2579,7 +2579,7 @@
                     A++;
                   }
                   if (B[A] === "(" && B[A + 2] === ")" || B[A] === "'" && B[A + 2] === "'") {
-                    x2 = assign(B[A + 1], s);
+                    x = assign(B[A + 1], s);
                     z = Math.pow(10, B[A + 1].length) - 1;
                     A += 3;
                   }
@@ -2596,7 +2596,7 @@
                 if (B.length <= A) {
                   d = y * z;
                   s = /* void */
-                  n = x2 + d * v + z * w;
+                  n = x + d * v + z * w;
                   break;
                 }
               }
@@ -3081,31 +3081,31 @@
       init_process2();
       (function(root) {
         "use strict";
-        var cosh = Math.cosh || function(x2) {
-          return Math.abs(x2) < 1e-9 ? 1 - x2 : (Math.exp(x2) + Math.exp(-x2)) * 0.5;
+        var cosh = Math.cosh || function(x) {
+          return Math.abs(x) < 1e-9 ? 1 - x : (Math.exp(x) + Math.exp(-x)) * 0.5;
         };
-        var sinh = Math.sinh || function(x2) {
-          return Math.abs(x2) < 1e-9 ? x2 : (Math.exp(x2) - Math.exp(-x2)) * 0.5;
+        var sinh = Math.sinh || function(x) {
+          return Math.abs(x) < 1e-9 ? x : (Math.exp(x) - Math.exp(-x)) * 0.5;
         };
-        var cosm1 = function(x2) {
+        var cosm1 = function(x) {
           var b = Math.PI / 4;
-          if (-b > x2 || x2 > b) {
-            return Math.cos(x2) - 1;
+          if (-b > x || x > b) {
+            return Math.cos(x) - 1;
           }
-          var xx = x2 * x2;
+          var xx = x * x;
           return xx * (xx * (xx * (xx * (xx * (xx * (xx * (xx / 20922789888e3 - 1 / 87178291200) + 1 / 479001600) - 1 / 3628800) + 1 / 40320) - 1 / 720) + 1 / 24) - 1 / 2);
         };
-        var hypot = function(x2, y) {
-          var a = Math.abs(x2);
+        var hypot = function(x, y) {
+          var a = Math.abs(x);
           var b = Math.abs(y);
           if (a < 3e3 && b < 3e3) {
             return Math.sqrt(a * a + b * b);
           }
           if (a < b) {
             a = b;
-            b = x2 / y;
+            b = x / y;
           } else {
-            b = y / x2;
+            b = y / x;
           }
           return a * Math.sqrt(1 + b * b);
         };
@@ -3315,23 +3315,23 @@
             b = this["im"];
             var c = z["re"];
             var d = z["im"];
-            var t, x2;
+            var t, x;
             if (0 === d) {
               return new Complex(a / c, b / c);
             }
             if (Math.abs(c) < Math.abs(d)) {
-              x2 = c / d;
-              t = c * x2 + d;
+              x = c / d;
+              t = c * x + d;
               return new Complex(
-                (a * x2 + b) / t,
-                (b * x2 - a) / t
+                (a * x + b) / t,
+                (b * x - a) / t
               );
             } else {
-              x2 = d / c;
-              t = d * x2 + c;
+              x = d / c;
+              t = d * x + c;
               return new Complex(
-                (a + b * x2) / t,
-                (b - a * x2) / t
+                (a + b * x) / t,
+                (b - a * x) / t
               );
             }
           },
@@ -3791,20 +3791,20 @@
             var oneMinus = 1 - a;
             var onePlus = 1 + a;
             var d = oneMinus * oneMinus + b * b;
-            var x2 = d !== 0 ? new Complex(
+            var x = d !== 0 ? new Complex(
               (onePlus * oneMinus - b * b) / d,
               (b * oneMinus + onePlus * b) / d
             ) : new Complex(
               a !== -1 ? a / 0 : 0,
               b !== 0 ? b / 0 : 0
             );
-            var temp = x2["re"];
-            x2["re"] = logHypot(x2["re"], x2["im"]) / 2;
-            x2["im"] = Math.atan2(x2["im"], temp) / 2;
+            var temp = x["re"];
+            x["re"] = logHypot(x["re"], x["im"]) / 2;
+            x["im"] = Math.atan2(x["im"], temp) / 2;
             if (noIM) {
-              x2["im"] = -x2["im"];
+              x["im"] = -x["im"];
             }
-            return x2;
+            return x;
           },
           /**
            * Calculate the complex acoth
@@ -4109,10 +4109,10 @@
           "y": 0,
           "z": 0
         };
-        function parse(dest, w, x2, y, z) {
+        function parse(dest, w, x, y, z) {
           if (z !== void 0) {
             dest["w"] = w;
-            dest["x"] = x2;
+            dest["x"] = x;
             dest["y"] = y;
             dest["z"] = z;
             return;
@@ -4200,12 +4200,12 @@
             dest["x"] = dest["y"] = dest["z"] = 0;
           } else {
             dest["w"] = w || 0;
-            if (x2 && x2.length === 3) {
-              dest["x"] = x2[0];
-              dest["y"] = x2[1];
-              dest["z"] = x2[2];
+            if (x && x.length === 3) {
+              dest["x"] = x[0];
+              dest["y"] = x[1];
+              dest["z"] = x[2];
             } else {
-              dest["x"] = x2 || 0;
+              dest["x"] = x || 0;
               dest["y"] = y || 0;
               dest["z"] = z || 0;
             }
@@ -4227,11 +4227,11 @@
           }
           return ret;
         }
-        function Quaternion(w, x2, y, z) {
+        function Quaternion(w, x, y, z) {
           if (!(this instanceof Quaternion)) {
-            return new Quaternion(w, x2, y, z);
+            return new Quaternion(w, x, y, z);
           }
-          parse(this, w, x2, y, z);
+          parse(this, w, x, y, z);
         }
         Quaternion.prototype = {
           "w": 1,
@@ -4247,8 +4247,8 @@
            * @param {number=} z imag
            * @returns {Quaternion}
            */
-          "add": function(w, x2, y, z) {
-            parse(P, w, x2, y, z);
+          "add": function(w, x, y, z) {
+            parse(P, w, x, y, z);
             return new Quaternion(
               this["w"] + P["w"],
               this["x"] + P["x"],
@@ -4265,8 +4265,8 @@
            * @param {number=} z imag
            * @returns {Quaternion}
            */
-          "sub": function(w, x2, y, z) {
-            parse(P, w, x2, y, z);
+          "sub": function(w, x, y, z) {
+            parse(P, w, x, y, z);
             return new Quaternion(
               this["w"] - P["w"],
               this["x"] - P["x"],
@@ -4289,10 +4289,10 @@
            */
           "norm": function() {
             var w = this["w"];
-            var x2 = this["x"];
+            var x = this["x"];
             var y = this["y"];
             var z = this["z"];
-            return Math.sqrt(w * w + x2 * x2 + y * y + z * z);
+            return Math.sqrt(w * w + x * x + y * y + z * z);
           },
           /**
            * Calculates the squared length/modulus/magnitude or the norm of a quaternion
@@ -4301,10 +4301,10 @@
            */
           "normSq": function() {
             var w = this["w"];
-            var x2 = this["x"];
+            var x = this["x"];
             var y = this["y"];
             var z = this["z"];
-            return w * w + x2 * x2 + y * y + z * z;
+            return w * w + x * x + y * y + z * z;
           },
           /**
            * Normalizes the quaternion to have |Q| = 1 as long as the norm is not zero
@@ -4314,15 +4314,15 @@
            */
           "normalize": function() {
             var w = this["w"];
-            var x2 = this["x"];
+            var x = this["x"];
             var y = this["y"];
             var z = this["z"];
-            var norm = Math.sqrt(w * w + x2 * x2 + y * y + z * z);
+            var norm = Math.sqrt(w * w + x * x + y * y + z * z);
             if (norm < Quaternion["EPSILON"]) {
               return Quaternion["ZERO"];
             }
             norm = 1 / norm;
-            return new Quaternion(w * norm, x2 * norm, y * norm, z * norm);
+            return new Quaternion(w * norm, x * norm, y * norm, z * norm);
           },
           /**
            * Calculates the Hamilton product of two quaternions
@@ -4334,21 +4334,21 @@
            * @param {number=} z imag
            * @returns {Quaternion}
            */
-          "mul": function(w, x2, y, z) {
-            parse(P, w, x2, y, z);
+          "mul": function(w, x, y, z) {
+            parse(P, w, x, y, z);
             var w1 = this["w"];
             var x1 = this["x"];
             var y1 = this["y"];
             var z1 = this["z"];
             var w2 = P["w"];
-            var x22 = P["x"];
+            var x2 = P["x"];
             var y2 = P["y"];
             var z2 = P["z"];
             return new Quaternion(
-              w1 * w2 - x1 * x22 - y1 * y2 - z1 * z2,
-              w1 * x22 + x1 * w2 + y1 * z2 - z1 * y2,
-              w1 * y2 + y1 * w2 + z1 * x22 - x1 * z2,
-              w1 * z2 + z1 * w2 + x1 * y2 - y1 * x22
+              w1 * w2 - x1 * x2 - y1 * y2 - z1 * z2,
+              w1 * x2 + x1 * w2 + y1 * z2 - z1 * y2,
+              w1 * y2 + y1 * w2 + z1 * x2 - x1 * z2,
+              w1 * z2 + z1 * w2 + x1 * y2 - y1 * x2
             );
           },
           /**
@@ -4374,8 +4374,8 @@
            * @param {number=} z imag
            * @returns {number}
            */
-          "dot": function(w, x2, y, z) {
-            parse(P, w, x2, y, z);
+          "dot": function(w, x, y, z) {
+            parse(P, w, x, y, z);
             return this["w"] * P["w"] + this["x"] * P["x"] + this["y"] * P["y"] + this["z"] * P["z"];
           },
           /**
@@ -4386,15 +4386,15 @@
            */
           "inverse": function() {
             var w = this["w"];
-            var x2 = this["x"];
+            var x = this["x"];
             var y = this["y"];
             var z = this["z"];
-            var normSq = w * w + x2 * x2 + y * y + z * z;
+            var normSq = w * w + x * x + y * y + z * z;
             if (normSq === 0) {
               return Quaternion["ZERO"];
             }
             normSq = 1 / normSq;
-            return new Quaternion(w * normSq, -x2 * normSq, -y * normSq, -z * normSq);
+            return new Quaternion(w * normSq, -x * normSq, -y * normSq, -z * normSq);
           },
           /**
            * Multiplies a quaternion with the inverse of a second quaternion
@@ -4405,26 +4405,26 @@
            * @param {number=} z imag
            * @returns {Quaternion}
            */
-          "div": function(w, x2, y, z) {
-            parse(P, w, x2, y, z);
+          "div": function(w, x, y, z) {
+            parse(P, w, x, y, z);
             var w1 = this["w"];
             var x1 = this["x"];
             var y1 = this["y"];
             var z1 = this["z"];
             var w2 = P["w"];
-            var x22 = P["x"];
+            var x2 = P["x"];
             var y2 = P["y"];
             var z2 = P["z"];
-            var normSq = w2 * w2 + x22 * x22 + y2 * y2 + z2 * z2;
+            var normSq = w2 * w2 + x2 * x2 + y2 * y2 + z2 * z2;
             if (normSq === 0) {
               return Quaternion["ZERO"];
             }
             normSq = 1 / normSq;
             return new Quaternion(
-              (w1 * w2 + x1 * x22 + y1 * y2 + z1 * z2) * normSq,
-              (x1 * w2 - w1 * x22 - y1 * z2 + z1 * y2) * normSq,
-              (y1 * w2 - w1 * y2 - z1 * x22 + x1 * z2) * normSq,
-              (z1 * w2 - w1 * z2 - x1 * y2 + y1 * x22) * normSq
+              (w1 * w2 + x1 * x2 + y1 * y2 + z1 * z2) * normSq,
+              (x1 * w2 - w1 * x2 - y1 * z2 + z1 * y2) * normSq,
+              (y1 * w2 - w1 * y2 - z1 * x2 + x1 * z2) * normSq,
+              (z1 * w2 - w1 * z2 - x1 * y2 + y1 * x2) * normSq
             );
           },
           /**
@@ -4442,10 +4442,10 @@
            */
           "exp": function() {
             var w = this["w"];
-            var x2 = this["x"];
+            var x = this["x"];
             var y = this["y"];
             var z = this["z"];
-            var vNorm = Math.sqrt(x2 * x2 + y * y + z * z);
+            var vNorm = Math.sqrt(x * x + y * y + z * z);
             var wExp = Math.exp(w);
             var scale = wExp / vNorm * Math.sin(vNorm);
             if (vNorm === 0) {
@@ -4453,7 +4453,7 @@
             }
             return new Quaternion(
               wExp * Math.cos(vNorm),
-              x2 * scale,
+              x * scale,
               y * scale,
               z * scale
             );
@@ -4465,23 +4465,23 @@
            */
           "log": function() {
             var w = this["w"];
-            var x2 = this["x"];
+            var x = this["x"];
             var y = this["y"];
             var z = this["z"];
             if (y === 0 && z === 0) {
               return new Quaternion(
-                logHypot(w, x2),
-                Math.atan2(x2, w),
+                logHypot(w, x),
+                Math.atan2(x, w),
                 0,
                 0
               );
             }
-            var qNorm2 = x2 * x2 + y * y + z * z + w * w;
-            var vNorm = Math.sqrt(x2 * x2 + y * y + z * z);
+            var qNorm2 = x * x + y * y + z * z + w * w;
+            var vNorm = Math.sqrt(x * x + y * y + z * z);
             var scale = Math.atan2(vNorm, w) / vNorm;
             return new Quaternion(
               Math.log(qNorm2) * 0.5,
-              x2 * scale,
+              x * scale,
               y * scale,
               z * scale
             );
@@ -4495,8 +4495,8 @@
            * @param {number=} z imag
            * @returns {Quaternion}
            */
-          "pow": function(w, x2, y, z) {
-            parse(P, w, x2, y, z);
+          "pow": function(w, x, y, z) {
+            parse(P, w, x, y, z);
             if (P["y"] === 0 && P["z"] === 0) {
               if (P["w"] === 1 && P["x"] === 0) {
                 return this;
@@ -4549,8 +4549,8 @@
            * @param {number=} z imag
            * @returns {boolean}
            */
-          "equals": function(w, x2, y, z) {
-            parse(P, w, x2, y, z);
+          "equals": function(w, x, y, z) {
+            parse(P, w, x, y, z);
             var eps = Quaternion["EPSILON"];
             return Math.abs(P["w"] - this["w"]) < eps && Math.abs(P["x"] - this["x"]) < eps && Math.abs(P["y"] - this["y"]) < eps && Math.abs(P["z"] - this["z"]) < eps;
           },
@@ -4577,15 +4577,15 @@
            */
           "toString": function() {
             var w = this["w"];
-            var x2 = this["x"];
+            var x = this["x"];
             var y = this["y"];
             var z = this["z"];
             var ret = "";
-            if (isNaN(w) || isNaN(x2) || isNaN(y) || isNaN(z)) {
+            if (isNaN(w) || isNaN(x) || isNaN(y) || isNaN(z)) {
               return "NaN";
             }
             ret = numToStr(w, "", ret);
-            ret += numToStr(x2, "i", ret);
+            ret += numToStr(x, "i", ret);
             ret += numToStr(y, "j", ret);
             ret += numToStr(z, "k", ret);
             if ("" === ret)
@@ -4624,11 +4624,11 @@
            */
           "toMatrix": function(twoD) {
             var w = this["w"];
-            var x2 = this["x"];
+            var x = this["x"];
             var y = this["y"];
             var z = this["z"];
-            var wx = w * x2, wy = w * y, wz = w * z;
-            var xx = x2 * x2, xy = x2 * y, xz = x2 * z;
+            var wx = w * x, wy = w * y, wz = w * z;
+            var xx = x * x, xy = x * y, xz = x * z;
             var yy = y * y, yz = y * z, zz = z * z;
             if (twoD) {
               return [
@@ -4657,11 +4657,11 @@
            */
           "toMatrix4": function(twoD) {
             var w = this["w"];
-            var x2 = this["x"];
+            var x = this["x"];
             var y = this["y"];
             var z = this["z"];
-            var wx = w * x2, wy = w * y, wz = w * z;
-            var xx = x2 * x2, xy = x2 * y, xz = x2 * z;
+            var wx = w * x, wy = w * y, wz = w * z;
+            var xx = x * x, xy = x * y, xz = x * z;
             var yy = y * y, yz = y * z, zz = z * z;
             if (twoD) {
               return [
@@ -4697,17 +4697,17 @@
            */
           "toEuler": function() {
             var w = this["w"];
-            var x2 = this["x"];
+            var x = this["x"];
             var y = this["y"];
             var z = this["z"];
-            var t = 2 * (w * y - z * x2);
+            var t = 2 * (w * y - z * x);
             return {
               // X-axis rotation
-              roll: Math.atan2(2 * (w * x2 + y * z), 1 - 2 * (x2 * x2 + y * y)),
+              roll: Math.atan2(2 * (w * x + y * z), 1 - 2 * (x * x + y * y)),
               // Y-axis rotation
               pitch: t >= 1 ? Math.PI / 2 : t <= -1 ? -Math.PI / 2 : Math.asin(t),
               // Z-axis rotation
-              yaw: Math.atan2(2 * (w * z + x2 * y), 1 - 2 * (y * y + z * z))
+              yaw: Math.atan2(2 * (w * z + x * y), 1 - 2 * (y * y + z * z))
             };
           },
           /**
@@ -4747,17 +4747,17 @@
            * 
            * @returns Function
            */
-          "slerp": function(w, x2, y, z) {
-            parse(P, w, x2, y, z);
+          "slerp": function(w, x, y, z) {
+            parse(P, w, x, y, z);
             var w1 = this["w"];
             var x1 = this["x"];
             var y1 = this["y"];
             var z1 = this["z"];
             var w2 = P["w"];
-            var x22 = P["x"];
+            var x2 = P["x"];
             var y2 = P["y"];
             var z2 = P["z"];
-            var cosTheta0 = w1 * w2 + x1 * x22 + y1 * y2 + z1 * z2;
+            var cosTheta0 = w1 * w2 + x1 * x2 + y1 * y2 + z1 * z2;
             if (cosTheta0 < 0) {
               w1 = -w1;
               x1 = -x1;
@@ -4769,7 +4769,7 @@
               return function(pct) {
                 return new Quaternion(
                   w1 + pct * (w2 - w1),
-                  x1 + pct * (x22 - x1),
+                  x1 + pct * (x2 - x1),
                   y1 + pct * (y2 - y1),
                   z1 + pct * (z2 - z1)
                 )["normalize"]();
@@ -4785,7 +4785,7 @@
               var s1 = sinTheta / sinTheta0;
               return new Quaternion(
                 s0 * w1 + s1 * w2,
-                s0 * x1 + s1 * x22,
+                s0 * x1 + s1 * x2,
                 s0 * y1 + s1 * y2,
                 s0 * z1 + s1 * z2
               );
@@ -5004,11 +5004,11 @@
             }
             return a / b;
           },
-          "parse": function(x2) {
-            return parseFloat(x2);
+          "parse": function(x) {
+            return parseFloat(x);
           },
-          "empty": function(x2) {
-            return !x2;
+          "empty": function(x) {
+            return !x;
           },
           "pow": function(a, b) {
             return Math.pow(a, b);
@@ -5022,11 +5022,11 @@
         var Complex;
         var Quaternion;
         var STR_REGEXP = /([+-]?)(?:([^+x-]+)?(?:x(?:\^([\d\/]+))?)|([^+x-]+))/g;
-        function Polynomial2(x2) {
+        function Polynomial2(x) {
           if (!(this instanceof Polynomial2)) {
-            return new Polynomial2(x2);
+            return new Polynomial2(x);
           }
-          this["coeff"] = parse(x2);
+          this["coeff"] = parse(x);
         }
         Polynomial2["trace"] = null;
         var modinv = function(z, n) {
@@ -5045,10 +5045,10 @@
           }
           return Math.abs(a);
         }
-        function clone(x2) {
+        function clone(x) {
           var res = {};
-          for (var i in x2) {
-            res[i] = x2[i];
+          for (var i in x) {
+            res[i] = x[i];
           }
           return res;
         }
@@ -5087,23 +5087,23 @@
           }
           return k;
         }
-        function degree(x2) {
+        function degree(x) {
           var i = -Infinity;
-          for (var k in x2) {
-            if (!FIELD["empty"](x2[k]))
+          for (var k in x) {
+            if (!FIELD["empty"](x[k]))
               i = Math.max(k, i);
           }
           return i;
         }
-        var div = function(x2, y) {
+        var div = function(x, y) {
           var r = {};
-          var i = degree(x2);
+          var i = degree(x);
           var j = degree(y);
           var trace = [];
           while (i >= j) {
-            var tmp = r[i - j] = FIELD["div"](x2[i] || 0, y[j] || 0);
+            var tmp = r[i - j] = FIELD["div"](x[i] || 0, y[j] || 0);
             for (var k in y) {
-              x2[+k + i - j] = FIELD["sub"](x2[+k + i - j] || 0, FIELD["mul"](y[k] || 0, tmp));
+              x[+k + i - j] = FIELD["sub"](x[+k + i - j] || 0, FIELD["mul"](y[k] || 0, tmp));
             }
             if (Polynomial2["trace"] !== null) {
               var tr = {};
@@ -5112,10 +5112,10 @@
               }
               trace.push(new Polynomial2(tr));
             }
-            i = degree(x2);
+            i = degree(x);
           }
           if (Polynomial2["trace"] !== null) {
-            trace.push(new Polynomial2(x2));
+            trace.push(new Polynomial2(x));
             Polynomial2["trace"] = trace;
           }
           return r;
@@ -5132,30 +5132,30 @@
           }
           return num;
         }
-        var parse = function(x2) {
+        var parse = function(x) {
           var ret = {};
-          if (x2 === null || x2 === void 0) {
-            x2 = 0;
+          if (x === null || x === void 0) {
+            x = 0;
           }
-          switch (typeof x2) {
+          switch (typeof x) {
             case "object":
-              if (x2["coeff"]) {
-                x2 = x2["coeff"];
+              if (x["coeff"]) {
+                x = x["coeff"];
               }
-              if (Fraction && x2 instanceof Fraction || Complex && x2 instanceof Complex || Quaternion && x2 instanceof Quaternion) {
-                ret[0] = x2;
+              if (Fraction && x instanceof Fraction || Complex && x instanceof Complex || Quaternion && x instanceof Quaternion) {
+                ret[0] = x;
               } else
-                for (var i in x2) {
-                  if (!FIELD["empty"](x2[i])) {
-                    ret[i] = FIELD["parse"](x2[i]);
+                for (var i in x) {
+                  if (!FIELD["empty"](x[i])) {
+                    ret[i] = FIELD["parse"](x[i]);
                   }
                 }
               return ret;
             case "number":
-              return { "0": FIELD["parse"](x2) };
+              return { "0": FIELD["parse"](x) };
             case "string":
               var tmp;
-              while (null !== (tmp = STR_REGEXP["exec"](x2))) {
+              while (null !== (tmp = STR_REGEXP["exec"](x))) {
                 var num = 1;
                 var exp = 1;
                 if (tmp[4] !== void 0) {
@@ -5178,9 +5178,9 @@
           }
           throw "Invalid Param";
         };
-        Polynomial2.prototype["gcd"] = function(x2) {
+        Polynomial2.prototype["gcd"] = function(x) {
           var a = clone(this["coeff"]);
-          var b = parse(x2);
+          var b = parse(x);
           var max;
           while (!isNull(b)) {
             var r = clone(a);
@@ -5208,7 +5208,7 @@
           }
           return new Polynomial2(ret);
         };
-        Polynomial2.prototype["eval"] = function(x2) {
+        Polynomial2.prototype["eval"] = function(x) {
           var poly = this["coeff"];
           var n = degree(poly);
           if (n < 0) {
@@ -5216,7 +5216,7 @@
           }
           var ret = poly[n];
           for (var i = n - 1; i >= 0; i--) {
-            ret = FIELD["mul"](ret, x2);
+            ret = FIELD["mul"](ret, x);
             if (!FIELD["empty"](poly[i])) {
               ret = FIELD["add"](ret, poly[i]);
             }
@@ -5255,8 +5255,8 @@
         Polynomial2.prototype["monic"] = function() {
           return new Polynomial2(monic(clone(this["coeff"]), lc(this["coeff"])));
         };
-        Polynomial2.prototype["add"] = function(x2) {
-          var para = parse(x2);
+        Polynomial2.prototype["add"] = function(x) {
+          var para = parse(x);
           var ret = {};
           var poly = this["coeff"];
           var keys = keyUnion(para, poly);
@@ -5265,8 +5265,8 @@
           }
           return new Polynomial2(ret);
         };
-        Polynomial2.prototype["sub"] = function(x2) {
-          var para = parse(x2);
+        Polynomial2.prototype["sub"] = function(x) {
+          var para = parse(x);
           var ret = {};
           var poly = this["coeff"];
           var keys = keyUnion(para, poly);
@@ -5275,8 +5275,8 @@
           }
           return new Polynomial2(ret);
         };
-        Polynomial2.prototype["mul"] = function(x2) {
-          var para = parse(x2);
+        Polynomial2.prototype["mul"] = function(x) {
+          var para = parse(x);
           var ret = {};
           var poly = this["coeff"];
           for (var i in para) {
@@ -5288,8 +5288,8 @@
           }
           return new Polynomial2(ret);
         };
-        Polynomial2.prototype["addmul"] = function(x2, y) {
-          var _x = parse(x2);
+        Polynomial2.prototype["addmul"] = function(x, y) {
+          var _x = parse(x);
           var _y = parse(y);
           var res = {};
           for (var i in _x) {
@@ -5301,8 +5301,8 @@
           }
           return this["add"](res);
         };
-        Polynomial2.prototype["div"] = function(x2) {
-          return new Polynomial2(div(clone(this["coeff"]), parse(x2)));
+        Polynomial2.prototype["div"] = function(x) {
+          return new Polynomial2(div(clone(this["coeff"]), parse(x)));
         };
         Polynomial2.prototype["pow"] = function(e) {
           if (isNaN(e) || e < 0 || e % 1) {
@@ -5319,9 +5319,9 @@
           }
           return res;
         };
-        Polynomial2.prototype["mod"] = function(x2) {
+        Polynomial2.prototype["mod"] = function(x) {
           var mod2 = clone(this["coeff"]);
-          div(mod2, parse(x2));
+          div(mod2, parse(x));
           return new Polynomial2(mod2);
         };
         Polynomial2.prototype["derive"] = function(n) {
@@ -5559,11 +5559,11 @@
               "div": function(a, b) {
                 return new F(a)["div"](b);
               },
-              "parse": function(x2) {
-                return new F(x2);
+              "parse": function(x) {
+                return new F(x);
               },
-              "empty": function(x2) {
-                return new F(x2)["equals"](0);
+              "empty": function(x) {
+                return new F(x)["equals"](0);
               },
               "pow": function(a, b) {
                 return new F(a)["pow"](b);
@@ -5592,11 +5592,11 @@
               "div": function(a, b) {
                 return mod(a * modinv(b, N), N);
               },
-              "parse": function(x2) {
-                return parseInt(x2, 10);
+              "parse": function(x) {
+                return parseInt(x, 10);
               },
-              "empty": function(x2) {
-                return void 0 === x2 || 0 === x2;
+              "empty": function(x) {
+                return void 0 === x || 0 === x;
               },
               "pow": function(a, b) {
                 for (var r = 1; b > 0; a = mod(a * a, N), b >>= 1) {
@@ -5648,9 +5648,33 @@
   init_process2();
   var import_matrix_js = __toESM(require_lib(), 1);
   var import_polynomial = __toESM(require_polynomial(), 1);
+
+  // toHTML.js
+  init_dirname();
+  init_buffer2();
+  init_process2();
+  function convertPolynomialToHTML(polynomial) {
+    return polynomial.replaceAll(/(\^)(\d+)/g, "<sup><small>$2</small></sup>");
+  }
+  function convertLimitToHTML(limit) {
+    let start = limit[0];
+    let end = limit[1];
+    return `${start} \u2264 x \u2264 ${end}`;
+  }
+  function convertRuleToHTML(rule) {
+    let lHTML = convertLimitToHTML(rule[0]);
+    let pHTML = convertPolynomialToHTML(rule[1]);
+    return `${pHTML}&emsp;&emsp;${lHTML}`;
+  }
+  function convertSplineToHTML(splineArr) {
+    let ruleArr = splineArr.map((rule) => convertRuleToHTML(rule));
+    return ruleArr.join("<br>");
+  }
+
+  // spline.js
   function solve(A, b) {
     A = (0, import_matrix_js.default)(A);
-    b = (0, import_matrix_js.default)((0, import_matrix_js.default)(b).map((x2) => [x2]));
+    b = (0, import_matrix_js.default)((0, import_matrix_js.default)(b).map((x) => [x]));
     let A_inv = (0, import_matrix_js.default)(A.inv());
     return A_inv.prod(b);
   }
@@ -5666,12 +5690,17 @@
     f(x) {
       if (x.length > 1) {
         return (this.f(x.slice(1)) - this.f(x.slice(0, -1))) / (x[x.length - 1] - x[0]);
-      } else
-        return eval(this.rule);
+      } else {
+        x = x[0];
+        if (x == 1)
+          return -1;
+        else
+          return x ** 2;
+      }
     }
     make_matrix_A() {
       let mu = this.h.slice(1).map((num, i) => this.h[i] / (num + this.h[i]));
-      let lambda = mu.map((x2) => 1 - x2);
+      let lambda = mu.map((x) => 1 - x);
       let A = Array.from(Array(this.n - 1), () => new Array(this.n + 1).fill(0));
       for (let i = 1; i < this.n; i++) {
         A[i - 1][i - 1] = mu[i];
@@ -5698,7 +5727,8 @@
       let spline = [];
       let m = this.make_matrix_m();
       for (let i = 0; i < this.n; i++) {
-        let q = this.f(this.x_[i]) - this.h[i + 1] * m[i] / 6;
+        let q = this.f([this.x_[i]]) - this.h[i + 1] * m[i] / 6;
+        console.log(q);
         let p = this.f([this.x_[i], this.x_[i + 1]]) + this.h[i + 1] * (m[i] - m[i + 1]) / 6;
         let rule_i = new import_polynomial.default("x").sub(this.x_[i]).pow(3).mul(m[i + 1] / (6 * this.h[i + 1])).add(new import_polynomial.default(`${this.x_[i + 1]}-x`).pow(3).mul(m[i] / (6 * this.h[i + 1]))).add(new import_polynomial.default("x").sub(this.x_[i]).mul(p)).add(q);
         spline[i] = rule_i.toString();
@@ -5711,36 +5741,15 @@
       return splineArr;
     }
   };
-
-  // toHTML.js
-  init_dirname();
-  init_buffer2();
-  init_process2();
-  function convertPolynomialToHTML(polynomial) {
-    return polynomial.replaceAll(/(\^)(\d+)/g, "<sup><small>$2</small></sup>");
-  }
-  function convertLimitToHTML(limit) {
-    let start = limit[0];
-    let end = limit[1];
-    return `${start} \u2264 x \u2264 ${end}`;
-  }
-  function convertRuleToHTML(rule) {
-    let lHTML = convertLimitToHTML(rule[0]);
-    let pHTML = convertPolynomialToHTML(rule[1]);
-    return `${pHTML}&emsp;&emsp;${lHTML}`;
-  }
-  function convertSplineToHTML(splineArr) {
-    let ruleArr = splineArr.map((rule) => convertRuleToHTML(rule));
-    return ruleArr.join("<br>");
-  }
+  var myIssue = new Issue("", [-1, 0, 1, 2]);
 
   // app.js
   function solve2(form) {
     try {
       let rule = form.functionRule.value;
       let x_ = form.knownXs.value.split(" ");
-      let myIssue = new Issue(rule, x_);
-      let mySpline = myIssue.make_spline();
+      let myIssue2 = new Issue(rule, x_);
+      let mySpline = myIssue2.make_spline();
       let mySplineStr = convertSplineToHTML(mySpline);
       const splineContainer = document.getElementById("spline-container");
       splineContainer.innerHTML = mySplineStr;

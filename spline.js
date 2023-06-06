@@ -1,5 +1,6 @@
 import matrix from "matrix-js"
 import Polynomial from "polynomial"
+import { convertSplineToHTML } from "./toHTML.js";
 
 function solve(A, b) {
     A = matrix(A);
@@ -22,7 +23,12 @@ class Issue {
         if (x.length > 1) {
             return (this.f(x.slice(1)) - this.f(x.slice(0, -1))) / (x[x.length - 1] - x[0]);
         }
-        else return eval(this.rule);
+        else {
+            x = x[0]
+            // return eval(this.rule);
+            if (x==1) return -1
+            else return(x**2)
+        }
     }
 
     make_matrix_A() {
@@ -59,7 +65,8 @@ class Issue {
         let spline = []
         let m = this.make_matrix_m()
         for (let i = 0; i < this.n; i++) {
-            let q = this.f(this.x_[i]) - this.h[i + 1] * m[i] / 6;
+            let q = this.f([this.x_[i]]) - this.h[i + 1] * m[i] / 6;
+            console.log(q);
             let p = this.f([this.x_[i], this.x_[i + 1]]) + this.h[i + 1] * (m[i] - m[i + 1]) / 6;
             let rule_i = new Polynomial("x").sub(this.x_[i]).pow(3).mul(m[i + 1] / (6 * this.h[i + 1]))
                 .add(new Polynomial(`${this.x_[i + 1]}-x`).pow(3).mul(m[i] / (6 * this.h[i + 1])))
@@ -76,3 +83,10 @@ class Issue {
 }
 
 export { Issue }
+
+let myIssue = new Issue("", [-1, 0, 1, 2])
+let x = [-1, 0, 1, 2]
+// console.log((myIssue.make_matrix_A()));
+// console.log((myIssue.make_matrix_b()));
+// console.log((myIssue.make_matrix_m()));
+// console.log((myIssue.make_spline()));
