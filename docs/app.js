@@ -5728,10 +5728,9 @@
       let m = this.make_matrix_m();
       for (let i = 0; i < this.n; i++) {
         let q = this.f([this.x_[i]]) - this.h[i + 1] * m[i] / 6;
-        console.log(q);
         let p = this.f([this.x_[i], this.x_[i + 1]]) + this.h[i + 1] * (m[i] - m[i + 1]) / 6;
         let rule_i = new import_polynomial.default("x").sub(this.x_[i]).pow(3).mul(m[i + 1] / (6 * this.h[i + 1])).add(new import_polynomial.default(`${this.x_[i + 1]}-x`).pow(3).mul(m[i] / (6 * this.h[i + 1]))).add(new import_polynomial.default("x").sub(this.x_[i]).mul(p)).add(q);
-        spline[i] = rule_i.toString().replace(/\d+\.\d+/g, (match) => parseFloat(match).toFixed(2));
+        spline[i] = rule_i.toString().replace(/\d+\.\d+/g, (match) => parseFloat(match).toFixed(5).toString().replace(/\.0*$|(\.\d*[1-9])0+$/, "$1"));
       }
       let splineArr = Array.from(Array(this.n), () => new Array(2).fill(0));
       this.x_.slice(1).map((node, i) => {
