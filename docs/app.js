@@ -20062,11 +20062,11 @@
     try {
       let chartStatus = Chart.getChart("myChart");
       if (chartStatus != void 0) {
-        console.log("destroy");
         chartStatus.destroy();
       }
       let rule = form.functionRule.value;
-      let x_ = form.knownXs.value.split(" ");
+      let x_ = [...new Set(form.knownXs.value.match(/-?\d+\.?\d*/g).map(Number))].sort((a, b) => a - b);
+      alert(x_);
       let myIssue = new Issue(rule, x_);
       let mySpline = myIssue.make_spline();
       let mySplineStr = convertSplineToHTML(mySpline);
