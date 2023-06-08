@@ -17,7 +17,37 @@
         </form>
     </div>
     <div id="spline-container"></div>
+    <div style="width: 500px;"><canvas id="myChart"></canvas></div>
     <script src="./app.js"></script>
+
+    <!-- <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <div id="myPlot" style="width:100%;max-width:700px"></div> -->
+
+    <!-- <script>
+        var exp = "x ** 2";
+
+        // Generate values
+        var xValues = [];
+        var yValues = [];
+        for (var x = 0; x <= 10; x += 1) {
+            xValues.push(x);
+            yValues.push(eval(exp));
+        }
+
+        // Define Data
+        var data = [{
+            x: xValues,
+            y: yValues,
+            mode: "lines"
+        }];
+
+        // Define Layout
+        var layout = { title: "y = " + exp };
+
+        // Display using Plotly
+        Plotly.newPlot("myPlot", data, layout);
+    </script> -->
+
 </body>
 
 </html>

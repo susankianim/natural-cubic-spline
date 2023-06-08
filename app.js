@@ -1,5 +1,7 @@
 import { Issue } from "./spline.js";
 import { convertSplineToHTML } from "./toHTML.js"
+import { Chart } from "chart.js/auto";
+
 
 function solve(form) {
     try {
@@ -8,10 +10,17 @@ function solve(form) {
         let myIssue = new Issue(rule, x_)
         let mySpline = myIssue.make_spline();
         let mySplineStr = convertSplineToHTML(mySpline);
-        
+
         const splineContainer = document.getElementById('spline-container');
         splineContainer.innerHTML = mySplineStr;
-        // alert("You typed: " + x_);
+
+        let chartData = myIssue.getChartData()
+        let canvas = document.getElementById('myChart');
+        let myChart = new Chart(canvas, {
+            type: 'line',
+            data: chartData
+        });
+        myChart.update();
     } catch (e) {
         console.log(e);
     }
