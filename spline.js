@@ -24,9 +24,11 @@ class Issue {
         }
         else {
             x = x[0]
-            return eval(this.rule);
-            // if (x == 1) return -1
-            // else return (x ** 2)
+            if (this.rule) return eval(this.rule);
+            else {
+                if (x == 1) return -1
+                else return (x ** 2)
+            }
         }
     }
 
@@ -70,7 +72,7 @@ class Issue {
                 .add(new Polynomial(`${this.x_[i + 1]}-x`).pow(3).mul(m[i] / (6 * this.h[i + 1])))
                 .add(new Polynomial("x").sub(this.x_[i]).mul(p)).add(q);
             spline[i] = rule_i.toString().replace(/\d+\.\d+/g, match =>
-                parseFloat(match).toFixed(5).toString().replace(/\.0*$|(\.\d*[1-9])0+$/, '$1'));
+                parseFloat(match).toFixed(10).toString().replace(/\.0*$|(\.\d*[1-9])0+$/, '$1'));
         }
         let splineArr = Array.from(Array(this.n), () => new Array(2).fill(0))
         this.x_.slice(1).map((node, i) => {
@@ -83,25 +85,45 @@ class Issue {
     getChartData() {
         let splineArr = this.make_spline()
         let xValues = [];
-        let yValues = [];
-        for (let i = +this.x_[0]; i <= +this.x_[this.n]; i += 0.1) {
+        let yValuesSpline = [];
+        let yValuesF = [];
+        let yValuesE = [];
+        for (let i = +this.x_[0]; i <= +this.x_[this.n]; i = +((i + 0.01).toFixed(10))) {
             xValues.push(i);
-            splineArr.forEach(row => {
+            splineArr.every(row => {
                 let limits = row[0];
                 let rule = new Polynomial(row[1]);
                 if (i >= limits[0] && i <= limits[1]) {
-                    yValues.push(rule.eval(i).toFixed(2));
-                    return;
+                    let temp1, temp2;
+                    yValuesSpline.push(temp1 = rule.eval(i).toFixed(10));
+                    yValuesF.push(temp2 = this.f([i]))
+                    yValuesE.push(Math.abs(temp1 - temp2))
+                    return false;
                 }
+                return true;
             })
         }
-        const chartData = {
+        let chartData = {
             labels: xValues,
             datasets: [{
-                label: 'My Data',
-                data: yValues,
-                backgroundColor: ['#FF6384', '#36A2EB'],
-                hoverBackgroundColor: ['#FF6384', '#36A2EB']
+                label: 'Cubic Spline',
+                data: yValuesSpline,
+                borderColor: '#FF6384',
+                borderWidth: 1,
+                pointRadius: 0
+
+            }, {
+                label: 'f',
+                data: yValuesF,
+                borderColor: '#36A2EB',
+                borderWidth: 1,
+                pointRadius: 0
+            }, {
+                label: 'e',
+                data: yValuesE,
+                borderColor: '#000000',
+                borderWidth: 1,
+                pointRadius: 0
             }]
         };
         return chartData;
@@ -111,7 +133,3 @@ class Issue {
 
 export { Issue }
 
-// let x = [-1, 0, 1, 2]
-// let myIssue = new Issue("", x)
-// // console.log((myIssue.make_spline()));
-// myIssue.getChartData()
