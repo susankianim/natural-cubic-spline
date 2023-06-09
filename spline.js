@@ -66,13 +66,14 @@ class Issue {
         let spline = []
         let m = this.make_matrix_m()
         for (let i = 0; i < this.n; i++) {
-            let q = this.f([this.x_[i]]) - this.h[i + 1] * m[i] / 6;
-            let p = this.f([this.x_[i], this.x_[i + 1]]) + this.h[i + 1] * (m[i] - m[i + 1]) / 6;
+            let q = (this.f([this.x_[i]]) - this.h[i + 1]**2 * m[i] / 6).toFixed(10);
+            let p = (this.f([this.x_[i], this.x_[i + 1]]) + this.h[i + 1] * (m[i] - m[i + 1]) / 6).toFixed(10);
+            console.log(q, p);
             let rule_i = new Polynomial("x").sub(this.x_[i]).pow(3).mul(m[i + 1] / (6 * this.h[i + 1]))
                 .add(new Polynomial(`${this.x_[i + 1]}-x`).pow(3).mul(m[i] / (6 * this.h[i + 1])))
                 .add(new Polynomial("x").sub(this.x_[i]).mul(p)).add(q);
-            spline[i] = rule_i.toString().replace(/\d+\.\d+/g, match =>
-                parseFloat(match).toFixed(10).toString().replace(/\.0*$|(\.\d*[1-9])0+$/, '$1'));
+            spline[i] = new Polynomial(rule_i.toString().replace(/\d+\.\d+(e-\d*)?/g, match =>
+                parseFloat(match).toFixed(9).toString().replace(/\.0*$|(\.\d*[1-9])0+$/, '$1'))).toString();
         }
         let splineArr = Array.from(Array(this.n), () => new Array(2).fill(0))
         this.x_.slice(1).map((node, i) => {
@@ -133,3 +134,5 @@ class Issue {
 
 export { Issue }
 
+let ms = new Issue("Math.abs(x)", [-2, 0, 1]);
+console.log(ms.make_spline());
