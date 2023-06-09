@@ -9,9 +9,10 @@ function solve(A, b) {
 }
 
 class Issue {
-    constructor(rule, x_, is_natural = true) {
+    constructor(x_, values, rule, is_natural = true) {
         this.is_natural = is_natural
         this.rule = rule;
+        this.values = values;
         this.x_ = x_;
         this.n = x_.length - 1;
         this.h = x_.slice(1).map((num, i) => num - x_[i]);
@@ -23,11 +24,12 @@ class Issue {
             return (this.f(x.slice(1)) - this.f(x.slice(0, -1))) / (x[x.length - 1] - x[0]);
         }
         else {
-            x = x[0]
+            x = x[0];
             if (this.rule) return eval(this.rule);
             else {
-                if (x == 1) return -1
-                else return (x ** 2)
+                return this.values[(this.x_).indexOf(x)];
+                // if (x == 1) return -1
+                // else return (x ** 2)
             }
         }
     }
@@ -68,12 +70,11 @@ class Issue {
         for (let i = 0; i < this.n; i++) {
             let q = (this.f([this.x_[i]]) - this.h[i + 1]**2 * m[i] / 6).toFixed(10);
             let p = (this.f([this.x_[i], this.x_[i + 1]]) + this.h[i + 1] * (m[i] - m[i + 1]) / 6).toFixed(10);
-            console.log(q, p);
             let rule_i = new Polynomial("x").sub(this.x_[i]).pow(3).mul(m[i + 1] / (6 * this.h[i + 1]))
                 .add(new Polynomial(`${this.x_[i + 1]}-x`).pow(3).mul(m[i] / (6 * this.h[i + 1])))
                 .add(new Polynomial("x").sub(this.x_[i]).mul(p)).add(q);
             spline[i] = new Polynomial(rule_i.toString().replace(/\d+\.\d+(e-\d*)?/g, match =>
-                parseFloat(match).toFixed(9).toString().replace(/\.0*$|(\.\d*[1-9])0+$/, '$1'))).toString();
+                parseFloat(match).toFixed(9).toString().replace(/\.0*$|(\.\d*[1-9])0+$/, '$1'))).toLatex();
         }
         let splineArr = Array.from(Array(this.n), () => new Array(2).fill(0))
         this.x_.slice(1).map((node, i) => {
@@ -127,6 +128,12 @@ class Issue {
                 pointRadius: 0
             }]
         };
+
+        if(!this.rule) {
+            let dotChart = chartData.datasets.findIndex((chart) => chart.label=="f" || chart.label=="e");
+            chartData.datasets[dotChart].pointRadius = 3;
+        }
+
         return chartData;
     }
 
@@ -134,5 +141,6 @@ class Issue {
 
 export { Issue }
 
-let ms = new Issue("Math.abs(x)", [-2, 0, 1]);
+let ms = new Issue([-1, 0, 1, 2], [1, 0, 1, 4]);
 console.log(ms.make_spline());
+

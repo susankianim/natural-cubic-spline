@@ -1,5 +1,6 @@
 function convertPolynomialToHTML(polynomial) {
     return polynomial.replaceAll(/(\^)(\d+)/g, "<sup><small>$2</small></sup>")
+    // return `$${polynomial}$`
 }
 
 function convertLimitToHTML(limit) {
