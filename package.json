@@ -29,7 +29,7 @@
     "polynomial": "^1.4.5"
   },
   "devDependencies": {
-    "esbuild": "^0.17.19",
+    "esbuild": "^0.25.1",
     "esbuild-plugin-polyfill-node": "^0.3.0"
   }
 }
